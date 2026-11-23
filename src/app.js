@@ -2,6 +2,7 @@ import express from 'express'
 import http from 'http'
 import { matchRoutes } from './modules/match/match.js'
 import { attachWebSocketServer } from './server.js'
+import { commentaryRouter } from './modules/commentary/commentary.js'
 
 const PORT = Number(process.env.PORT || 5000)
 const HOST = process.env.HOST || '0.0.0.0'
@@ -16,8 +17,11 @@ app.get('/', (req, res) => {
 })
 
 app.use('/match', matchRoutes)
-const { broadcastMatchCreated } = attachWebSocketServer(server)
+app.use('/match/:id/commentary', commentaryRouter)
+const { broadcastMatchCreated, broadcastCommentary } =
+  attachWebSocketServer(server)
 app.locals.broadcastMatchCreated = broadcastMatchCreated
+app.locals.broadcastCommentary = broadcastCommentary
 
 server.listen(PORT, HOST, () => {
   const baseUrl =

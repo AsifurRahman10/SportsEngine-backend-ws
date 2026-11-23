@@ -64,6 +64,19 @@ function broadcastToAll(wss, payload) {
   }
 }
 
+function broadcastToMatch(matchId, payload) {
+  const subscribers = matchSubscribers.get(matchId)
+  if (!subscribers || subscribers.size === 0) return
+
+  const message = JSON.stringify(payload)
+
+  for (const client of subscribers) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message)
+    }
+  }
+}
+
 export function attachWebSocketServer(server) {
   const wss = new WebSocketServer({
     noServer: true,
@@ -121,5 +134,9 @@ export function attachWebSocketServer(server) {
     broadcastToAll(wss, { type: 'matchCreated', match })
   }
 
-  return { broadcastMatchCreated }
+  function broadcastCommentary(matchId, comment) {
+    broadcastToMatch(matchId, { type: 'commentary', data: comment })
+  }
+
+  return { broadcastMatchCreated, broadcastCommentary }
 }
