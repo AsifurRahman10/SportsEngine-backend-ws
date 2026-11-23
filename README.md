@@ -4,6 +4,8 @@ A high-performance real-time sports engine backend built with **Node.js**, **Exp
 
 SportEngine powers real-time match tracking and live play-by-play commentary broadcasting. Whenever a match is created or new commentary is logged, updates are instantly broadcasted to connected clients.
 
+**Live Demo:** [sportsengine-backend-ws.onrender.com](https://sportsengine-backend-ws.onrender.com/)
+
 ---
 
 ## Features
@@ -92,12 +94,12 @@ cp .env.example .env
 
 Configure your environment values:
 
-| Variable | Description | Default |
-|---|---|---|
-| `PORT` | HTTP & WebSocket server port | `5000` |
-| `HOST` | Host address to bind to | `0.0.0.0` |
-| `CLIENT_URL` | Allowed client origin for CORS | `http://localhost:3000` |
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:password@localhost:5432/sportengine` |
+| Variable       | Description                    | Default                                                 |
+| -------------- | ------------------------------ | ------------------------------------------------------- |
+| `PORT`         | HTTP & WebSocket server port   | `5000`                                                  |
+| `HOST`         | Host address to bind to        | `0.0.0.0`                                               |
+| `CLIENT_URL`   | Allowed client origin for CORS | `http://localhost:3000`                                 |
+| `DATABASE_URL` | PostgreSQL connection string   | `postgresql://user:password@localhost:5432/sportengine` |
 
 ### 3. Database Migrations
 
@@ -153,9 +155,10 @@ pnpm start
 ### Matches
 
 #### 1. List Matches
+
 - **Endpoint**: `GET /match`
 - **Query Parameters**:
-  - `limit` *(optional, number, max: 100, default: 50)*
+  - `limit` _(optional, number, max: 100, default: 50)_
 - **Response**: `200 OK`
   ```json
   {
@@ -177,6 +180,7 @@ pnpm start
   ```
 
 #### 2. Create Match
+
 - **Endpoint**: `POST /match`
 - **Headers**: `Content-Type: application/json`
 - **Request Body**:
@@ -215,11 +219,12 @@ pnpm start
 ### Commentary
 
 #### 1. List Match Commentary
+
 - **Endpoint**: `GET /match/:id/commentary`
 - **Path Parameters**:
-  - `id` *(required, integer)*: Match ID
+  - `id` _(required, integer)_: Match ID
 - **Query Parameters**:
-  - `limit` *(optional, number, max: 100, default: 10)*
+  - `limit` _(optional, number, max: 100, default: 10)_
 - **Response**: `200 OK`
   ```json
   {
@@ -243,9 +248,10 @@ pnpm start
   ```
 
 #### 2. Add Match Commentary
+
 - **Endpoint**: `POST /match/:id/commentary`
 - **Path Parameters**:
-  - `id` *(required, integer)*: Match ID
+  - `id` _(required, integer)_: Match ID
 - **Headers**: `Content-Type: application/json`
 - **Request Body**:
   ```json
@@ -287,6 +293,7 @@ pnpm start
 ## WebSocket Protocol
 
 WebSocket server endpoint:
+
 ```text
 ws://localhost:5000/ws
 ```
@@ -339,7 +346,9 @@ ws://localhost:5000/ws
 ### Broadcast Events
 
 #### `matchCreated` (Global Broadcast)
+
 Sent to **all** connected clients when any new match is added:
+
 ```json
 {
   "type": "matchCreated",
@@ -359,7 +368,9 @@ Sent to **all** connected clients when any new match is added:
 ```
 
 #### `commentary` (Match Subscription Broadcast)
+
 Sent **only** to clients subscribed to the corresponding `matchId`:
+
 ```json
 {
   "type": "commentary",
