@@ -52,6 +52,10 @@ router.post('/', validateRequest(createMatchSchema), async (req, res) => {
       })
       .returning()
 
+    if (res.app.locals.broadcastMatchCreated) {
+      res.app.locals.broadcastMatchCreated(match)
+    }
+
     res.status(201).json({ match })
   } catch (error) {
     console.error(error)
