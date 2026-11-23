@@ -9,7 +9,11 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const PORT = Number(process.env.PORT || 5000)
-const HOST = process.env.HOST || '0.0.0.0'
+// Render and cloud platforms require binding to 0.0.0.0
+const HOST =
+  process.env.RENDER || process.env.NODE_ENV === 'production' || process.env.HOST === 'localhost'
+    ? '0.0.0.0'
+    : process.env.HOST || '0.0.0.0'
 
 const app = express()
 const server = http.createServer(app)

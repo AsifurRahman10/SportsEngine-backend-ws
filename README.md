@@ -111,6 +111,23 @@ pnpm generate
 pnpm migrate
 ```
 
+---
+
+## Deploying to Render
+
+When deploying as a **Web Service** on Render:
+
+1. **Build & Start Commands**:
+   - **Build Command**: `pnpm install && pnpm migrate`
+   - **Start Command**: `pnpm start`
+2. **Environment Variables**:
+   - `DATABASE_URL`: Your production PostgreSQL connection string (e.g. Neon, Supabase, or Render PostgreSQL).
+   - `CLIENT_URL`: Your frontend URL (e.g. `https://your-frontend.vercel.app`).
+   - `HOST`: Set to `0.0.0.0` (Render requires binding to `0.0.0.0`, **not** `localhost`).
+   - `PORT`: (Optional) Render automatically injects `PORT=10000`, which the server will pick up automatically.
+
+---
+
 ### 4. Running the Application
 
 ```bash
