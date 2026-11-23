@@ -76,7 +76,7 @@ export function attachWebSocketServer(server) {
 
     if (pathname !== '/ws') return
 
-    ws.handleUpgrade(req, socket, head, (ws) => {
+    wss.handleUpgrade(req, socket, head, (ws) => {
       wss.emit('connection', ws, req)
     })
   })
