@@ -3,12 +3,24 @@ import http from 'http'
 import { matchRoutes } from './modules/match/match.js'
 import { attachWebSocketServer } from './server.js'
 import { commentaryRouter } from './modules/commentary/commentary.js'
+import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const PORT = Number(process.env.PORT || 5000)
 const HOST = process.env.HOST || '0.0.0.0'
 
 const app = express()
 const server = http.createServer(app)
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+    credentials: true
+  })
+)
 
 app.use(express.json())
 
